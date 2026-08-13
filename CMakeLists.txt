@@ -6,7 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Vulkan REQUIRED)
 
-add_executable(VulkanDemo main.cpp)
+add_executable(VulkanDemo 
+    main.cpp
+    src/vulkan/instance.cpp
+    src/vulkan/device.cpp
+)
 target_include_directories(VulkanDemo PRIVATE
     ${Vulkan_INCLUDE_DIRS}
     "C:/cpp-libraries/glfw-3.5.1.bin.WIN64/include"
