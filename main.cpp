@@ -26,6 +26,7 @@ int main() {
         glfwPollEvents();
     }
 
+    vkDestroySurfaceKHR(instance.handle(), surface, nullptr);
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
