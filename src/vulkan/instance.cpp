@@ -34,7 +34,7 @@ VulkanInstance::VulkanInstance() {
 
 	VkResult result = vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance);
 	if (result != VK_SUCCESS) {
-		throw std::runtime_error("failed to create vulkan instance, VkResult: " + std::to_string(result));
+		throw std::runtime_error("failed to create vulkan instance");
 	}
 }
 
