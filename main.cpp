@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "src/vulkan/instance.h"
 #include "src/vulkan/device.h"
+#include "src/vulkan/swapchain.h"
 
 int main() {
     glfwInit();
@@ -18,12 +19,15 @@ int main() {
         throw std::runtime_error("failed to create surface");
     }
     
-    VulkanDevice device(instance.handle());
 
+    // put these in their own block so that their destructors run before the surface is destroyed
+    {
+        VulkanDevice device(instance.handle());
+        VulkanSwapchain swapchain(device, surface);
 
-
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
+        while (!glfwWindowShouldClose(window)) {
+            glfwPollEvents();
+        }
     }
 
     vkDestroySurfaceKHR(instance.handle(), surface, nullptr);
