@@ -1,5 +1,6 @@
 #pragma once
 #include <vulkan/vulkan.h>
+#include <vector>
 #include "device.h"
 #include "swapchain.h"
 #include "pipeline.h"
@@ -16,10 +17,13 @@ public:
 	void recordCommandBuffer(VulkanPipeline& pipeline, VulkanSwapchain& swapchain, uint32_t imageIndex);
 	void drawFrame(VulkanDevice& device, VulkanSwapchain& swapchain, VulkanPipeline& pipeline);
 private:
-	void createSyncObjects(VulkanDevice& device);
+	void createCommandPool(VkDevice device, uint32_t queueFamilyIndex);
+	void createCommandBuffers(VkDevice device, VkCommandPool commandPool);
+
+	void createSyncObjects(VkDevice device, std::vector<VkImage> swapchainImages);
 
 	void transitionImageLayout(
-		VulkanSwapchain& swapchain,
+		VkImage image,
 		uint32_t imageIndex,
 		VkImageLayout oldLayout,
 		VkImageLayout newLayout,
@@ -29,13 +33,17 @@ private:
 		VkPipelineStageFlags2 dstStageMask
 	);
 
-	VkDevice m_device; // use for destruction
+	VkDevice m_device;
 
 	VkCommandPool m_commandPool;
-	VkCommandBuffer m_commandBuffer;
 
-	// (i think?) semaphores do not block CPU execution, fences block CPU execution
-	VkSemaphore m_renderFinishedSemaphore;
-	VkSemaphore m_presentFinishedSemaphore;
-	VkFence m_drawFence;
+	const uint32_t MAX_FRAMES_IN_FLIGHT = 2;
+
+	std::vector<VkCommandBuffer> m_commandBuffers;
+
+	std::vector<VkSemaphore> m_renderFinishedSemaphores;
+	std::vector<VkSemaphore> m_presentFinishedSemaphores;
+	std::vector<VkFence> m_inFlightFences;
+
+	uint32_t m_frameIndex = 0;
 };
