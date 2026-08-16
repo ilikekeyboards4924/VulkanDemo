@@ -10,6 +10,11 @@ public:
 	VulkanPipeline(VulkanDevice& device, VulkanSwapchain& swapchain);
 	~VulkanPipeline();
 
+	// disable copying
+	VulkanPipeline(const VulkanPipeline&) = delete;
+	VulkanPipeline& operator=(const VulkanPipeline&) = delete;
+
+	VkPipeline handle() const { return m_graphicsPipeline; }
 private:
 	std::vector<char> readShaderFile(const std::string& filename);
 	VkShaderModule createShaderModule(VulkanDevice& device, const std::vector<char>& code);

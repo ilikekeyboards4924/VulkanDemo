@@ -37,6 +37,7 @@ add_executable(VulkanDemo
     src/vulkan/device.cpp
     src/vulkan/swapchain.cpp
     src/vulkan/pipeline.cpp
+    src/vulkan/commandmanager.cpp
 )
 add_dependencies(VulkanDemo Shaders)
 target_include_directories(VulkanDemo PRIVATE
