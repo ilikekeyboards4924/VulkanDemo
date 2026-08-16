@@ -133,7 +133,7 @@ void CommandManager::recordCommandBuffer(VulkanPipeline& pipeline, VulkanSwapcha
 	VkRect2D scissor{ .offset = { 0, 0 }, .extent = swapchain.extent() };
 	vkCmdSetScissor(m_commandBuffer, 0, 1, &scissor);
 
-	vkCmdDraw(m_commandBuffer, 3, 1, 0, 0); // after 300 years of writing boilerplate... A DRAW COMMAND!!!!!!!!
+	vkCmdDraw(m_commandBuffer, 6, 1, 0, 0); // after 300 years of writing boilerplate... A DRAW COMMAND!!!!!!!!
 
 	vkCmdEndRendering(m_commandBuffer);
 
