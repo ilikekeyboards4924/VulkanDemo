@@ -10,8 +10,8 @@ public:
 	VulkanPipeline(VulkanDevice& device, VulkanSwapchain& swapchain);
 	~VulkanPipeline();
 
-	std::vector<char> readShaderFile(const std::string& filename);
 private:
+	std::vector<char> readShaderFile(const std::string& filename);
 	VkShaderModule createShaderModule(VulkanDevice& device, const std::vector<char>& code);
 
 	VkDevice m_device; // use for destruction

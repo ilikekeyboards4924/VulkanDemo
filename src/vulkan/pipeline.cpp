@@ -161,6 +161,8 @@ std::vector<char> VulkanPipeline::readShaderFile(const std::string& filename) {
 
     file.close();
 
+    std::cout << "read file \"" << filename << "\"of size: " << buffer.size() << std::endl;
+
     return buffer;
 }
 

@@ -30,9 +30,6 @@ int main() {
         VulkanSwapchain swapchain(device, surface);
 
         VulkanPipeline pipeline(device, swapchain);
-        //pipeline.readShaderFile("src/spirv/vert.spv"); // this will throw an error because the working directory is the build folder, not the main.cpp folder
-        std::vector<char> bufferTest = pipeline.readShaderFile("shader/shader.vert.spv");
-        std::cout << "read file of size:" << bufferTest.size() << ";" << std::endl;
 
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
