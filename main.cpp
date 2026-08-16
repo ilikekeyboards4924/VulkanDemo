@@ -5,6 +5,10 @@
 #include "src/vulkan/instance.h"
 #include "src/vulkan/device.h"
 #include "src/vulkan/swapchain.h"
+#include "src/vulkan/pipeline.h"
+
+
+#include <vector>
 
 int main() {
     glfwInit();
@@ -24,6 +28,11 @@ int main() {
     {
         VulkanDevice device(instance.handle());
         VulkanSwapchain swapchain(device, surface);
+
+        VulkanPipeline pipeline(device, swapchain);
+        //pipeline.readShaderFile("src/spirv/vert.spv"); // this will throw an error because the working directory is the build folder, not the main.cpp folder
+        std::vector<char> bufferTest = pipeline.readShaderFile("shader/shader.vert.spv");
+        std::cout << "read file of size:" << bufferTest.size() << ";" << std::endl;
 
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();

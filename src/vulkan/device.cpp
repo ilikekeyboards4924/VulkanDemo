@@ -60,9 +60,15 @@ void VulkanDevice::createLogicalDevice() {
 
 	const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 	VkPhysicalDeviceFeatures deviceFeatures = {};
+	VkPhysicalDeviceDynamicRenderingFeatures dynamicRenderingFeatures{ // using dynamic rendering removes two steps, creating renderpass and framebuffer
+		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES,
+		.pNext = nullptr,
+		.dynamicRendering = VK_TRUE
+	};
 
 	VkDeviceCreateInfo deviceCreateInfo{
 		.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+		.pNext = &dynamicRenderingFeatures,
 		.queueCreateInfoCount = 1, // only one queue family is being set up in the device
 		.pQueueCreateInfos = &deviceQueueCreateInfo,
 		.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size()), // may be unsafe if not casting to uint32_t
