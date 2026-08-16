@@ -12,17 +12,28 @@ VulkanPipeline::VulkanPipeline(VulkanDevice& device, VulkanSwapchain& swapchain)
     m_vertexShaderModule = createShaderModule(device, readShaderFile("shader/shader.vert.spv"));
     m_fragmentShaderModule = createShaderModule(device, readShaderFile("shader/shader.frag.spv"));
 
+    createGraphicsPipeline(device, swapchain);
+}
+
+VulkanPipeline::~VulkanPipeline() {
+    vkDestroyShaderModule(m_device, m_vertexShaderModule, nullptr);
+    vkDestroyShaderModule(m_device, m_fragmentShaderModule, nullptr);
+    vkDestroyPipelineLayout(m_device, m_pipelineLayout, nullptr);
+    vkDestroyPipeline(m_device, m_graphicsPipeline, nullptr);
+}
+
+void VulkanPipeline::createGraphicsPipeline(VulkanDevice& device, VulkanSwapchain& swapchain) {
     VkPipelineShaderStageCreateInfo vertexShaderStageCreateInfo{
         .sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
         .stage = VK_SHADER_STAGE_VERTEX_BIT,
         .module = m_vertexShaderModule,
-        .pName = "main", // i dont know the point of this name, just copied from vulkan docs
+        .pName = "main", // entry point of the shader program
     };
     VkPipelineShaderStageCreateInfo fragmentShaderStageCreateInfo{
         .sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
         .stage = VK_SHADER_STAGE_FRAGMENT_BIT,
         .module = m_fragmentShaderModule,
-        .pName = "main", // i dont know the point of this name, just copied from vulkan docs
+        .pName = "main", // entry point of the shader program
     };
 
     VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShaderStageCreateInfo, fragmentShaderStageCreateInfo };
@@ -107,7 +118,7 @@ VulkanPipeline::VulkanPipeline(VulkanDevice& device, VulkanSwapchain& swapchain)
         throw std::runtime_error("failed to create pipeline layout");
     }
 
-    
+
     // END OF FIXED-FUNCTION STATE
 
     VkFormat colorAttachmentFormat = swapchain.imageFormat();
@@ -141,13 +152,6 @@ VulkanPipeline::VulkanPipeline(VulkanDevice& device, VulkanSwapchain& swapchain)
     std::cout << "created graphics pipeline" << std::endl;
 }
 
-VulkanPipeline::~VulkanPipeline() {
-    vkDestroyShaderModule(m_device, m_vertexShaderModule, nullptr);
-    vkDestroyShaderModule(m_device, m_fragmentShaderModule, nullptr);
-    vkDestroyPipelineLayout(m_device, m_pipelineLayout, nullptr);
-    vkDestroyPipeline(m_device, m_graphicsPipeline, nullptr);
-}
-
 std::vector<char> VulkanPipeline::readShaderFile(const std::string& filename) {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
@@ -161,7 +165,7 @@ std::vector<char> VulkanPipeline::readShaderFile(const std::string& filename) {
 
     file.close();
 
-    std::cout << "read file \"" << filename << "\"of size: " << buffer.size() << std::endl;
+    std::cout << "read file \"" << filename << "\" of size: " << buffer.size() << std::endl;
 
     return buffer;
 }

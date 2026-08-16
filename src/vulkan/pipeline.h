@@ -19,6 +19,8 @@ private:
 	std::vector<char> readShaderFile(const std::string& filename);
 	VkShaderModule createShaderModule(VulkanDevice& device, const std::vector<char>& code);
 
+	void createGraphicsPipeline(VulkanDevice& device, VulkanSwapchain& swapchain);
+
 	VkDevice m_device; // use for destruction
 	VkShaderModule m_vertexShaderModule;
 	VkShaderModule m_fragmentShaderModule;

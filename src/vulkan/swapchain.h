@@ -11,9 +11,14 @@ public:
 	VulkanSwapchain(const VulkanSwapchain&) = delete;
 	VulkanSwapchain& operator=(const VulkanSwapchain&) = delete;
 
+	VkSwapchainKHR handle() const { return m_swapchain; }
+
 	const std::vector<VkImageView>& imageViews() const { return m_swapchainImageViews; }
+	const std::vector<VkImage>& images() const { return m_swapchainImages; }
+
 	VkFormat imageFormat() const { return m_surfaceFormat.format; }
 	VkExtent2D extent() const { return m_extent; }
+
 private:
 	void pickSurfaceFormat(VulkanDevice& device, VkSurfaceKHR surface);
 	void pickExtent(VulkanDevice& device, VkSurfaceKHR surface); // extent is the dimensions/size

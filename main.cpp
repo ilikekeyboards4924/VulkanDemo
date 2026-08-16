@@ -6,7 +6,7 @@
 #include "src/vulkan/device.h"
 #include "src/vulkan/swapchain.h"
 #include "src/vulkan/pipeline.h"
-
+#include "src/vulkan/commandmanager.h"
 
 #include <vector>
 
@@ -23,7 +23,6 @@ int main() {
         throw std::runtime_error("failed to create surface");
     }
     
-
     // put these in their own block so that their destructors run before the surface is destroyed
     {
         VulkanDevice device(instance.handle());
@@ -31,9 +30,15 @@ int main() {
 
         VulkanPipeline pipeline(device, swapchain);
 
+        CommandManager commandManager(device, swapchain);
+
+        commandManager.drawFrame(device, swapchain, pipeline);
+
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
         }
+
+        vkDeviceWaitIdle(device.handle()); // wait for the device to be destroyed before destroying the semaphores and fences
     }
 
     vkDestroySurfaceKHR(instance.handle(), surface, nullptr);

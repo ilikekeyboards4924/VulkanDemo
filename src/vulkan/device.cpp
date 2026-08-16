@@ -60,9 +60,13 @@ void VulkanDevice::createLogicalDevice() {
 
 	const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 	VkPhysicalDeviceFeatures deviceFeatures = {};
+	VkPhysicalDeviceSynchronization2Features synchronization2Features{
+		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES,
+		.synchronization2 = VK_TRUE,
+	};
 	VkPhysicalDeviceDynamicRenderingFeatures dynamicRenderingFeatures{ // using dynamic rendering removes two steps, creating renderpass and framebuffer
 		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES,
-		.pNext = nullptr,
+		.pNext = &synchronization2Features,
 		.dynamicRendering = VK_TRUE
 	};
 
