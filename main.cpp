@@ -34,9 +34,9 @@ int main() {
 
         CommandManager commandManager(device, swapchain);
 
-        commandManager.drawFrame(device, swapchain, pipeline);
 
         while (!glfwWindowShouldClose(window)) {
+            commandManager.drawFrame(device, swapchain, pipeline);
             glfwPollEvents();
         }
 
