@@ -81,7 +81,7 @@ void VulkanPipeline::createGraphicsPipeline(VulkanDevice& device, VulkanSwapchai
         .rasterizerDiscardEnable = VK_FALSE, // do not discard the rasterizer result
         .polygonMode = VK_POLYGON_MODE_FILL, // fill with fragments
         .cullMode = VK_CULL_MODE_BACK_BIT, // cull the back faces
-        .frontFace = VK_FRONT_FACE_CLOCKWISE, // dont know, copied from vulkan docs
+        .frontFace = VK_FRONT_FACE_CLOCKWISE, // if the points in a triangle are not drawn in clockwise order, then it is a back face (culled)
         .depthBiasEnable = VK_FALSE, // add constant value to depth, useful for shadow maps
         .lineWidth = 1.0f, // functionally irrelevant when using polygon_mode_fill, but vulkan gets mad if its not defined
     };
