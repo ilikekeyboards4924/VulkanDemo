@@ -67,7 +67,7 @@ void VulkanPipeline::createGraphicsPipeline(VulkanDevice& device, VulkanSwapchai
 
     VkViewport viewport{ 0.0f, 0.0f, static_cast<float>(swapchain.extent().width), static_cast<float>(swapchain.extent().height), 0.0f, 1.0f };
     VkRect2D scissor{ VkOffset2D{ 0, 0 }, swapchain.extent() };
-    VkPipelineViewportStateCreateInfo viewportStateCreateInfo{ // reference docs for different between viewports and scissor rectangles
+    VkPipelineViewportStateCreateInfo viewportStateCreateInfo{ // reference docs for difference between viewports and scissor rectangles
         .sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
         .viewportCount = 1,
         .pViewports = &viewport,
