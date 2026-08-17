@@ -27,13 +27,13 @@ void VulkanPipeline::createGraphicsPipeline(VulkanDevice& device, VulkanSwapchai
         .sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
         .stage = VK_SHADER_STAGE_VERTEX_BIT,
         .module = m_vertexShaderModule,
-        .pName = "main", // entry point of the shader program
+        .pName = "main", // entry point of the vertex shader program
     };
     VkPipelineShaderStageCreateInfo fragmentShaderStageCreateInfo{
         .sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
         .stage = VK_SHADER_STAGE_FRAGMENT_BIT,
         .module = m_fragmentShaderModule,
-        .pName = "main", // entry point of the shader program
+        .pName = "main", // entry point of the fragment shader program
     };
 
     VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShaderStageCreateInfo, fragmentShaderStageCreateInfo };
